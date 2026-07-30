@@ -16,6 +16,9 @@ app.use(cookieParser());
 app.get("/", function (req, res) {
     res.render("index")
 });
+app.get("/login", function (req, res) {
+    res.render("login")
+});
 
 app.post("/register", async function (req, res) {
     let { email, password, username, age, name } = req.body;
@@ -40,6 +43,16 @@ app.post("/register", async function (req, res) {
 
 
 });
+
+
+app.post("/login" , async (req,res)=>{
+    let {email, password} = req.body;
+    let user = await userModel.findOne({email})
+    if(!user) return res.status(500).send("Something went wrong");
+    
+
+
+})
 
 
 
