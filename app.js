@@ -21,7 +21,7 @@ app.get("/login", (req, res) => {
 });
 app.get("/profile",isLoggedIn , (req, res) => {
     console.log(req.user)
-    res.render("login")
+    res.render("profile")
 });
 
 app.post("/register", async function (req, res) {
@@ -57,7 +57,7 @@ app.post("/login", async (req, res) => {
         if (result) {
             let token = jwt.sign({ email: email, userid: user._id }, "hello")
             res.cookie("token", token)
-            res.status(200).send("you can login");
+            res.status(200).redirect("/profile");
         }
         else res.redirect('/login')
     })
@@ -72,7 +72,7 @@ app.get('/logout', (req, res) => {
 
 })
 function isLoggedIn(req, res, next) {
-    if (req.cookies.token === "") res.send("you must be logged in")
+    if (req.cookies.token === "") res.redirect('/login')
     else {
         let data = jwt.verify(req.cookies.token, "hello")
         req.user = data;
