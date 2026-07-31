@@ -76,8 +76,8 @@ function isLoggedIn(req, res, next) {
     else {
         let data = jwt.verify(req.cookies.token, "hello")
         req.user = data;
+        next();
     }
-    next();
 }
 
 
